@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+.socialBar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 32px;
+    background: white;
+
+    display: flex;
+    align-items:center;
+    justify-content:flex-end;
+   
+    padding: 0 30px;
+    gap: 17px;
+    z-index: 1100;
+}
+
+.socialBar i {
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* ================= MAIN HEADER ================= */
+
+.mainHeader {
+    position: fixed;
+    top: 32px;
+    width: 100%;
+    height: 80px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 60px;
+    border-bottom: 1px solid white;
+    z-index: 1000;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.headerLeft a {
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.headerRight {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    white-space: nowrap;
+    align-items: center; /* vertical center */
+    gap: 20px;   
+}
+
+.headerRight a {
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    
+}
+.saleLink {
+  color: red;
+}
+.dropdown a i {
+    margin-left: 5px;  
+}
+.headerLogo h1 {
+    font-family: Didot, "Bodoni MT", serif;
+    font-size: 52px;
+    font-weight: 500;
+    letter-spacing: 5px;
+}
+
+
+.icon {
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.announcementBar {
+    margin-top: 112px;
+    height: 44px;
+    background: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.imageSection {
+    position:relative;
+    width:100%;
+    height:90vh;
+    overflow: hidden;
+}
+
+.imageSection img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.imageText {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 42px;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-align: center;
+}
