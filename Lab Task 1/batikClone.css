@@ -1,0 +1,881 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Social Bar */
+.socialBar {
+    border-bottom: 1px solid #ddd;
+    top: 0;
+    width: 100%;
+    height: 32px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 12px 30px;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+.menuToggle {
+    display: none;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.socialBar i {
+    font-size: 14px;
+    cursor: pointer; 
+}
+
+/* Main Header */
+/* Main Header */
+.mainHeader {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 115px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 30px 30px 0px 30px;
+    z-index: 1000;
+}
+
+.headerLeft {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-bottom: 20px;  /* bottom:20px ka alternative */
+    margin-left: 40px;    /* left:40px ka alternative */
+}
+
+.headerLeft a {
+    text-decoration: none;
+    color: black;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+    font-family: Arial, Helvetica, sans-serif;
+    /* padding-left: 25px hata diya kyunke gap use kar rahe */
+}
+
+.rightSide {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 6px;
+}
+
+.rightTop {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.headerRight {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+    margin-right: 57px;   /* right:57px ka alternative */
+    margin-bottom: 0px;   /* bottom:24px ka alternative */
+    padding: 7.5px 15px;
+}
+
+.headerRight a {
+    text-decoration: none;
+    color: black;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    font-family: Jost, sans-serif;
+}
+
+.saleLink {
+    margin-right: 300px;   
+    margin-bottom:20px;    
+}
+
+.saleLink a {
+    color: black;
+    font-size: 13px;
+    text-decoration: none;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.headerLogo {
+    margin-bottom: 17px;    /* bottom:17px ka alternative */
+}
+
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-between;
+    gap: 6px;
+}
+
+.dropdown a i {
+    margin-left: 5px;  
+}
+
+.headerIcons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.headerIcons i {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.headerIcons a,
+.headerIcons i {
+    color: black;
+    font-display: normal;
+}
+/* Announcement Bar */
+.announcementBar {
+    height: 42px;
+    background: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    padding: 0 20px;
+}
+
+/* Image Section */
+.imageSection {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.imageSection video {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    display: block;
+    margin: 0;
+}
+
+.img {
+    width: 100%;
+    height: 600px;
+    background-size: 100% 100%;
+    border-radius: 7px;
+    background-image: url("img24.png");
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0px 20px 20px 10px rgba(0,0,0,0.088);
+}
+
+.imageSection:hover .img {
+    animation: animate 12s linear infinite;
+}
+
+@keyframes animate {
+    0% { background-image: url("img1.png"); }
+    25% { background-image: url("img24.png"); }
+    50% { background-image: url("img25.png"); }
+    75% { background-image: url("img26.png"); }
+    100% { background-image: url("img27.png"); }
+}
+
+/* Featured Row */
+.featuredRow {
+    display: grid;
+    grid-template-columns: 1fr 1.6fr 1fr;
+    gap: 20px;
+    padding: 40px 30px;
+    align-items: start;
+    margin-top: 60px;
+}
+
+.sideCol {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 60px;
+    align-items: center;
+}
+
+.productCard {
+    border: 1px solid #eee;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+    transition: transform 0.3s;
+}
+
+.smallCard .cardImg {
+    width: 100%;
+    height: 350px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 16px;
+}
+
+.bigCard .cardImg {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 16px;
+}
+
+.cardInfo {
+    padding: 10px;
+    text-align: center;
+}
+
+.cardInfo h4 {
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 4px;
+}
+
+.cardInfo p {
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+}
+
+.productCard:hover {
+    transform: translateY(-5px);
+}
+
+/* Featured Navigation */
+.featuredNav {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    gap: 70px;
+}
+
+.arrows {
+    display: flex;
+    gap: 28px;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.trendingText {
+    font-family: 'Jost', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+/* Trending Images */
+.trendingImages {
+    display: flex;
+    justify-content: center;
+    gap: 22px;
+    margin-top: 40px;
+    padding: 0 30px;
+}
+
+.trendCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trendCard img {
+    width: 640px;
+    height: 900px;
+    object-fit: cover;
+}
+
+.trendCard img:hover {
+    transform: translateY(-5px);
+}
+
+.trendCard p {
+    margin-top: 5px;
+    font-family: 'Jost', sans-serif;
+    font-size: 22px;
+    letter-spacing: 0.8px;
+}
+
+/* Featured Title */
+.featuredTitle {
+    text-align: center;
+    font-family: 'Jost', sans-serif;
+    font-size: 34px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    margin-top: 70px;
+    margin-bottom: 40px;
+}
+
+/* Sort and Filter */
+.sortSelection {
+    padding: 8px 100px 10px 10px;
+    border: 1px solid #ddd;
+    background: white;
+}
+
+.filterButton {
+    padding: 10px 18px;
+    border: 1px solid #ddd;
+    background: white;
+    cursor: pointer;
+}
+
+/* Products Grid */
+.products {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 0 30px;
+}
+
+.card img {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+}
+
+.topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+}
+
+.filterButton i {
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+}
+
+.productInfo {
+    text-align: center;
+    padding: 20px 10px;
+}
+
+.productTitle {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.productPrice {
+    font-family: 'Jost', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+/* Blog Section */
+.blogSection {
+    text-align: center;
+    margin-top: 80px;
+    margin-bottom: 20px;
+}
+
+.blogs {
+    font-family: 'Jost', sans-serif;
+    font-size: 32px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: 10px;
+}
+
+.viewAllButton {
+    display: inline-block;
+    padding: 8px 15px;
+    border: 1px solid #ddd;
+    text-decoration: none;
+    color: black;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    letter-spacing: 5px;
+    background: white;
+}
+
+/* Blog Cards */
+.blogCards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    padding: 40px 30px;
+}
+
+.blogCard {
+    text-align: center;
+}
+
+.blogCard img {
+    width: 100%;
+    height: 360px;
+    object-fit: cover;
+    border-radius: 40px;
+}
+
+.blogDate {
+    margin-top: 18px;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    color: #555;
+}
+
+.blogTitle {
+    margin-top: 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+/* Footer */
+.footerCol ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footerCol li {
+    margin-bottom: 14px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.footer {
+    background: #ffffff;
+    margin-top: 80px;
+    padding: 60px 40px 20px;
+    font-family: 'Jost', sans-serif;
+}
+
+.footerContainer {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+.footerCol p {
+    margin-bottom: 14px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.subscribeCol h4 {
+    letter-spacing: 5px;
+    margin-bottom: 20px;
+    font-weight: 400;
+}
+
+.subscribeInput {
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid black;
+    padding-bottom: 6px;
+    max-width: 250px;
+}
+
+.subscribeInput input {
+    border: none;
+    outline: none;
+    background: transparent;
+    flex: 1;
+    font-size: 14px;
+}
+
+.subscribeInput i {
+    font-size: 18px;
+}
+
+.footerSocials {
+    margin-top: 25px;
+    display: flex;
+    gap: 20px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+.copyright {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+}
+
+.footerLine {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 50px 0px 40px 0px;
+    width: 100%;
+}
+
+/* ============================================= */
+/* RESPONSIVE DESIGN - MEDIA QUERIES */
+/* ============================================= */
+
+/* Tablet View (769px - 1024px) - Optional Bonus */
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .headerLeft {
+        left: 10px;
+    }
+    
+    .headerRight {
+        right: 20px;
+        gap: 15px;
+    }
+    
+    .saleLink a {
+        right: 180px;
+    }
+    
+    .trendCard img {
+        width: 450px;
+        height: 650px;
+    }
+    
+    .products {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .blogCards {
+        gap: 20px;
+    }
+    
+    .blogCard img {
+        height: 280px;
+    }
+}
+
+/* Mobile View (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    
+    /* Social Bar */
+    .socialBar {
+        justify-content: center;
+        padding: 12px 15px;
+        height: auto;
+        min-height: 32px;
+    }
+    
+    /* Header - Mobile */
+    .mainHeader {
+        height: auto;
+        min-height: 90px;
+        padding: 15px;
+        flex-wrap: wrap;
+        position: sticky;
+        top:0;
+        background: white;
+        z-index:1000;
+    }
+    
+    .headerLogo {
+        position: static;
+        bottom: 0;
+        order: 1;
+        width: 100%;
+        text-align: center;
+        margin: 10px 0;
+    }
+    
+    .headerLogo img {
+        max-width: 120px;
+    }
+    
+    .headerLeft {
+        position: static;
+        order: 2;
+        width: 100%;
+        justify-content: center;
+        padding: 10px 0;
+        gap: 15px;
+        flex-wrap: wrap;
+    }
+    
+    .headerLeft a {
+        padding-left: 0;
+        font-size: 12px;
+    }
+    
+    .rightSide {
+        order: 3;
+        width: 100%;
+        align-items: center;
+        position: static;
+    }
+    
+    .rightTop {
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+    
+    .headerRight {
+        position: static;
+        justify-content: center;
+        width: 100%;
+        padding: 10px 0;
+        gap: 15px;
+    }
+    
+    .saleLink {
+        position: static;
+        display: inline-block;
+        margin-top: 5px;
+    }
+    
+    .headerIcons {
+        justify-content: center;
+        gap: 15px;
+    }
+    
+    /* Announcement Bar */
+    .announcementBar {
+        height: auto;
+        min-height: 50px;
+        padding: 10px 15px;
+        font-size: 11px;
+        line-height: 1.4;
+    }
+    
+    /* Image Section */
+    .img {
+        height: 300px;
+    }
+    
+    /* Featured Row - Mobile */
+    .featuredRow {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 20px 15px;
+        margin-top: 30px;
+    }
+    
+    .sideCol {
+        margin-top: 0;
+        width: 100%;
+    }
+    
+    .sideCol .productCard {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    
+    .bigCard {
+        max-width: 350px;
+        margin: 0 auto;
+    }
+    
+    .smallCard .cardImg {
+        height: 300px;
+    }
+    
+    .bigCard .cardImg {
+        height: 400px;
+    }
+    
+    /* Featured Navigation */
+    .featuredNav {
+        gap: 30px;
+        margin-top: 30px;
+    }
+    
+    .trendingText {
+        font-size: 24px;
+        text-align: center;
+        padding: 0 15px;
+    }
+    
+    /* Trending Images - Mobile */
+    .trendingImages {
+        flex-direction: column;
+        align-items: center;
+        gap: 30px;
+        padding: 0 15px;
+    }
+    
+    .trendCard img {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        aspect-ratio: 0.7;
+    }
+    
+    .trendCard p {
+        font-size: 18px;
+    }
+    
+    /* Featured Title */
+    .featuredTitle {
+        font-size: 24px;
+        margin-top: 40px;
+        margin-bottom: 20px;
+    }
+    
+    /* Top Bar - Mobile */
+    .topBar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    
+    .filterButton {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .sortSelection {
+        width: 100%;
+        max-width: 300px;
+        padding: 8px 10px;
+    }
+    
+    /* Products Grid - Mobile */
+    .products {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+        padding: 0 15px;
+    }
+    
+    .card img {
+        height: auto;
+        aspect-ratio: 0.8;
+    }
+    
+    .productInfo {
+        padding: 10px 5px;
+    }
+    
+    .productTitle {
+        font-size: 14px;
+    }
+    
+    .productPrice {
+        font-size: 13px;
+    }
+    
+    /* Blog Section */
+    .blogSection {
+        margin-top: 40px;
+    }
+    
+    .blogs {
+        font-size: 24px;
+    }
+    
+    .viewAllButton {
+        letter-spacing: 3px;
+        font-size: 12px;
+    }
+    
+    /* Blog Cards - Mobile */
+    .blogCards {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        padding: 20px 15px;
+    }
+    
+    .blogCard {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+    
+    .blogCard img {
+        height: auto;
+        aspect-ratio: 1.2;
+        border-radius: 20px;
+    }
+    
+    .blogTitle {
+        font-size: 18px;
+    }
+    
+    /* Footer - Mobile */
+    .footer {
+        padding: 40px 20px 20px;
+        margin-top: 40px;
+    }
+    
+    .footerContainer {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        text-align: center;
+    }
+    
+    .footerCol {
+        text-align: center;
+    }
+    
+    .subscribeInput {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    .footerSocials {
+        justify-content: center;
+    }
+    
+    .copyright {
+        margin-top: 30px;
+        font-size: 12px;
+    }
+    
+    .footerLine {
+        margin: 30px 0px;
+    }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media screen and (max-width: 480px) {
+    
+    .products {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .card {
+        max-width: 300px;
+        margin: 0 auto;
+    }
+    
+    .headerLeft {
+        gap: 10px;
+    }
+    
+    .headerLeft a {
+        font-size: 11px;
+    }
+    
+    .rightTop {
+        gap: 10px;
+    }
+    
+    .headerRight {
+        gap: 10px;
+    }
+    
+    .headerRight a {
+        font-size: 12px;
+    }
+    
+    .arrows {
+        gap: 20px;
+        font-size: 18px;
+    }
+    
+    .trendingText {
+        font-size: 20px;
+    }
+}
