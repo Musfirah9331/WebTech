@@ -404,6 +404,103 @@
     font-size: 16px;
 }
 
+.quickViewBtn {
+    margin-top: 12px;
+    padding: 10px 14px;
+    border: 1px solid #111;
+    background: #fff;
+    color: #111;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.quickViewBtn:hover {
+    background: #111;
+    color: #fff;
+}
+
+.loadingMessage {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 24px 10px;
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    z-index: 2000;
+}
+
+.modalOverlay.open {
+    display: flex;
+}
+
+.modalContent {
+    position: relative;
+    width: min(680px, 100%);
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px 24px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.2);
+}
+
+.modalImageWrap {
+    width: 100%;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.modalImage {
+    width: 100%;
+    max-width: 320px;
+    height: 240px;
+    object-fit: contain;
+}
+
+.modalClose {
+    position: absolute;
+    top: 10px;
+    right: 14px;
+    border: none;
+    background: transparent;
+    font-size: 28px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.modalTitle {
+    font-family: 'Jost', sans-serif;
+    font-size: 26px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    padding-right: 26px;
+}
+
+.modalDescription {
+    font-family: 'Jost', sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    color: #333;
+    margin-bottom: 16px;
+}
+
+.modalRating {
+    font-family: 'Jost', sans-serif;
+    font-size: 15px;
+    color: #111;
+}
+
 /* Blog Section */
 .blogSection {
     text-align: center;
@@ -906,6 +1003,30 @@
     .productPrice {
         font-size: 13px;
     }
+
+    .quickViewBtn {
+        width: 100%;
+        font-size: 13px;
+        padding: 9px 10px;
+    }
+
+    .modalContent {
+        padding: 24px 16px;
+        border-radius: 14px;
+    }
+
+    .modalImage {
+        max-width: 260px;
+        height: 200px;
+    }
+
+    .modalTitle {
+        font-size: 22px;
+    }
+
+    .modalDescription {
+        font-size: 15px;
+    }
     
     /* Blog Section */
     .blogSection {
@@ -1018,5 +1139,14 @@
     
     .trendingText {
         font-size: 20px;
+    }
+
+    .modalContent {
+        width: 100%;
+    }
+
+    .modalImage {
+        max-width: 220px;
+        height: 180px;
     }
 }

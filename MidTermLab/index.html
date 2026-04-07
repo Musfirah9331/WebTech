@@ -161,7 +161,7 @@
 </div>
 
 
-   <h2 class="featuredTitle">Featured Products</h2>
+    <h2 class="featuredTitle">Featured Deals</h2>
 
    <div class="topBar">
     <button class="filterButton">
@@ -172,74 +172,18 @@
         <option value="bestSelling">Best selling</option>
     </select>
 </div>
-    <div class="products">
+    <div id="featuredDealsContainer" class="products"></div>
 
-    <div class="card">
-    <img src="img/img2.png">
-
-    <div class="productInfo">
-        <h3 class="productTitle">Juliana 3Pc - Festive Luxe Pret</h3>
-        <p class="productPrice">PKR 17,990</p>
-    </div>
-    </div>
-    <div class="card">
-    <img src="img/img3.png">
-    <div class="productInfo">
-        <h3 class="productTitle">Rust Livia 3Pc - Festive Luxe Pret</h3>
-        <p class="productPrice">PKR 16,990</p>
-    </div>
-    </div>
-    <div class="card">
-    <img src="img/img4.png">
-    <div class="productInfo">
-        <h3 class="productTitle">Pink Iris 3Pc - Festive Luxe Pret</h3>
-        <p class="productPrice">PKR 20,990</p>
-    </div>
-    </div>
-    <div class="card">
-    <img src="img/img5.png">
-    <div class="productInfo">
-        <h3 class="productTitle">Maya 3Pc - Festive Luxe Pret</h3>
-        <p class="productPrice">PKR 19,990</p>
-    </div>
- </div>
- </div>
-
- <div class="products">
-
-    <div class="card">
-        <img src="img/img6.png">
-        <div class="productInfo">
-            <h3 class="productTitle">Cicillia 3Pc - Festive Eid Prints</h3>
-            <p class="productPrice">PKR 11,990</p>
+<div id="quickViewModal" class="modalOverlay" aria-hidden="true">
+    <div class="modalContent" role="dialog" aria-modal="true" aria-labelledby="modalProductTitle">
+        <button type="button" class="modalClose" id="modalCloseBtn" aria-label="Close quick view">&times;</button>
+        <div class="modalImageWrap">
+            <img id="modalProductImage" class="modalImage" src="" alt="Product image">
         </div>
+        <h3 id="modalProductTitle" class="modalTitle"></h3>
+        <p id="modalProductDescription" class="modalDescription"></p>
+        <p id="modalProductRating" class="modalRating"></p>
     </div>
-
-    <div class="card">
-        <img src="img/img7.png">
-        <div class="productInfo">
-            <h3 class="productTitle">Rust Livia 3Pc - Festive Luxe Pret</h3>
-            <p class="productPrice">PKR 16,990</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="img/img8.png">
-        <div class="productInfo">
-            <h3 class="productTitle">Summer Daze 3Pc - Festive Eid Prints</h3>
-            <p class="productPrice">PKR 11,900</p>
-        </div>
-    </div>
-
-    <div class="card">
-        <img src="img/img9.png">
-        <div class="productInfo">
-            <h3 class="productTitle">Midnight 3Pc - Festive Eid Prints</h3>
-            <p class="productPrice">PKR 10,990</p>
-
-        </div>
-    </div>
-
 </div>
 
 <div class ="blogSection">
@@ -320,6 +264,7 @@
 </footer>
 
 </body>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script>
     function toggleMenu() {
         const nav = document.getElementById('mobileNav');
@@ -330,6 +275,94 @@
     document.querySelectorAll('#mobileNav a').forEach(function(link) {
         link.addEventListener('click', function() {
             document.getElementById('mobileNav').classList.remove('open');
+        });
+    });
+
+    const productMap = {};
+
+    function openQuickView(productId) {
+        const modal = document.getElementById('quickViewModal');
+        const product = productMap[productId];
+
+        if (!product) {
+            return;
+        }
+
+        document.getElementById('modalProductImage').src = product.image;
+        document.getElementById('modalProductImage').alt = product.title;
+        document.getElementById('modalProductTitle').textContent = product.title;
+        document.getElementById('modalProductDescription').textContent = product.description;
+        document.getElementById('modalProductRating').textContent = 'Rating: ' + product.rating.rate + ' / 5 (' + product.rating.count + ' reviews)';
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden', 'false');
+    }
+
+    function closeQuickView() {
+        const modal = document.getElementById('quickViewModal');
+        modal.classList.remove('open');
+        modal.setAttribute('aria-hidden', 'true');
+    }
+
+    function renderProductCard(product) {
+        const shortTitle = product.title.length > 48 ? product.title.slice(0, 48) + '...' : product.title;
+        return `
+            <div class="card">
+                <img src="${product.image}" alt="${shortTitle}">
+                <div class="productInfo">
+                    <h3 class="productTitle">${shortTitle}</h3>
+                    <p class="productPrice">$${product.price}</p>
+                    <button type="button" class="quickViewBtn" data-product-id="${product.id}">Quick View</button>
+                </div>
+            </div>
+        `;
+    }
+
+    function loadFeaturedDeals() {
+        const $container = $('#featuredDealsContainer');
+        $container.empty().append('<p class="loadingMessage">Loading featured deals...</p>');
+
+        $.ajax({
+            url: 'https://fakestoreapi.com/products/category/men%27s%20clothing?limit=4',
+            method: 'GET',
+            dataType: 'json',
+            success: function(products) {
+                $container.empty();
+                Object.keys(productMap).forEach(function(key) {
+                    delete productMap[key];
+                });
+
+                const featuredProducts = products.slice(0, 4);
+
+                featuredProducts.forEach(function(product) {
+                    productMap[product.id] = product;
+                    $container.append(renderProductCard(product));
+                });
+            },
+            error: function() {
+                $container.html('<p class="loadingMessage">Could not load deals right now. Please try again later.</p>');
+            }
+        });
+    }
+
+    $(document).ready(function() {
+        loadFeaturedDeals();
+
+        $('#featuredDealsContainer').on('click', '.quickViewBtn', function() {
+            const productId = Number($(this).data('product-id'));
+            openQuickView(productId);
+        });
+
+        $('#modalCloseBtn').on('click', closeQuickView);
+        $('#quickViewModal').on('click', function(event) {
+            if (event.target === this) {
+                closeQuickView();
+            }
+        });
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeQuickView();
+            }
         });
     });
 </script>
