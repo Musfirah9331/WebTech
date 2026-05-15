@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BATIK NEW Arrivals | Ready to Wear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/batikClone.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="socialBar">
+    <i class="fab fa-instagram"></i>
+    <i class="fab fa-facebook"></i>
+    <i class="fab fa-x-twitter"></i>
+    <i class="fab fa-snapchat"></i>
+</div>
+
+<header class = "mainHeader">
+    <div class="menuToggle" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+    </div>
+    
+    <div class = "headerLeft">
+
+        <div class="headerIcons">
+        <a href="javascript:void(0)" onclick="toggleSearchBar()" title="Search"><i class="fas fa-search"></i></a>
+        </div>
+        <a href="/products?category=New In">NEW IN</a>
+        <div class = "dropdown">
+        <a href = "/products?category=Festive">FESTIVE EID 2026 <i class="fas fa-chevron-down"></i></a>
+        </div>
+        <a href = "/products?category=Lawn">Trending Now</a>
+
+    </div>
+
+<div class = "headerLogo">
+    <img src = "/img/img0.png">
+</div>
+<div class="rightSide">
+
+    <div class="rightTop">
+
+        <div class="headerRight">
+            <div class="dropdown">
+                <a href="#">WINTER 2025 <i class="fas fa-chevron-down"></i></a>
+            </div>
+            <div class="dropdown">
+                <a href="#">PRET <i class="fas fa-chevron-down"></i></a>
+            </div>
+            <div class="dropdown">
+                <a href="#">BATIKstudio <i class="fas fa-chevron-down"></i></a>
+            </div>
+        </div>
+
+        <div class="headerIcons">
+            <a href="#"><i class="fas fa-user"></i></a>
+            <a href="#"><i class="fas fa-shopping-bag"></i></a>
+        </div>
+
+    </div>
+
+    <div class="saleLink">
+        <a href="#">SALE</a>
+    </div>
+
+</div>
+    </div>    
+</header>
+
+<!-- Mobile Header (visible only on mobile) -->
+<div class="mobileHeaderBar">
+    <div class="menuToggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+    <div class="mobileHeaderLogo">
+        <img src="/img/img0.png" style="max-width: 140px;">
+    </div>
+    <div class="mobileActionIcons">
+        <a href="javascript:void(0)" onclick="toggleSearchBar()"><i class="fas fa-search"></i></a>
+        <a href="#"><i class="fas fa-user"></i></a>
+        <a href="#"><i class="fas fa-shopping-bag"></i></a>
+    </div>
+</div>
+
+<!-- Mobile Navigation Menu -->
+<div id="mobileNav" class="mobileNav">
+    <a href="/products?category=New In">NEW IN</a>
+    <a href="/products?category=Festive">FESTIVE EID 2026</a>
+    <a href="/products?category=Lawn">Trending Now</a>
+    <a href="#">WINTER 2025</a>
+    <a href="#">PRET</a>
+    <a href="#">BATIKstudio</a>
+    <a href="#">SALE</a>
+</div>
+
+<!-- Search Bar (Hidden by default) -->
+<div id="searchBarContainer" class="searchBarContainer">
+    <form action="/products" method="GET" class="searchBarForm">
+        <input type="hidden" name="category" value="<%= category %>">
+        <input type="hidden" name="minPrice" value="<%= minPrice %>">
+        <input type="hidden" name="maxPrice" value="<%= maxPrice %>">
+        <input type="hidden" name="sort" value="<%= sort %>">
+        <input type="text" name="search" placeholder="Search products..." class="searchBarInput" value="<%= search %>" autofocus>
+        <button type="button" onclick="toggleSearchBar()" class="searchBarClose" title="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </form>
+</div>
+
+<div class = "announcementBar">
+For cash on Delivery orders, kindly pay in cash only when your parcel is handed over.
+No online transfers required  
+</div>
+
+<!-- Page Title -->
+<h2 class="featuredTitle">BATIK NEW ARRIVALS</h2>
+
+<!-- Filter + Sort Bar -->
+<div class="filterSection">
+    <div class="filterContainer">
+        <!-- Filter Icon & Price Popup -->
+        <div class="filterIcon">
+            <button onclick="toggleFilterPopup()" class="filterIconBtn" title="Filter by Price">
+                <i class="fas fa-filter"></i> Filter
+            </button>
+        </div>
+
+        <!-- Price Filter Popup (Hidden by default) -->
+        <div id="filterPopup" class="filterPopup" style="display: none;">
+            <form action="/products" method="GET" class="priceFilterForm">
+                <input type="hidden" name="search" value="<%= search %>">
+                <input type="hidden" name="category" value="<%= category %>">
+                <input type="hidden" name="sort" value="<%= sort %>">
+                
+                <div class="priceFilterGroup">
+                    <label>From</label>
+                    <input type="number" name="minPrice" placeholder="From PKR" value="<%= minPrice %>" class="priceField">
+                </div>
+
+                <div class="priceFilterGroup">
+                    <label>To</label>
+                    <input type="number" name="maxPrice" placeholder="To PKR" value="<%= maxPrice %>" class="priceField">
+                </div>
+
+                <div class="priceFilterActions">
+                    <button type="submit" class="priceFilterApply">Apply</button>
+                    <a href="/products?category=<%= category %>&search=<%= search %>&sort=<%= sort %>" class="priceFilterReset">Reset</a>
+                </div>
+                
+                <button type="button" onclick="toggleFilterPopup()" class="priceFilterClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Single Combined Select (Sort + Categories) -->
+        <div class="filterBox">
+            <input type="hidden" id="currentSearch" value="<%= search %>">
+            <input type="hidden" id="currentMinPrice" value="<%= minPrice %>">
+            <input type="hidden" id="currentMaxPrice" value="<%= maxPrice %>">
+
+            <select id="combinedFilter" class="filterSingle" onchange="handleCombinedChange(this.value)" title="Featured">
+                <option value="sort:default" <%= !sort || sort === 'default' ? 'selected' : '' %>>Featured</option>
+                <optgroup label="Sort">
+                    <option value="sort:priceLow"  <%= sort === 'priceLow'  ? 'selected' : '' %>>Price: Low to High</option>
+                    <option value="sort:priceHigh" <%= sort === 'priceHigh' ? 'selected' : '' %>>Price: High to Low</option>
+                    <option value="sort:nameAZ"    <%= sort === 'nameAZ'    ? 'selected' : '' %>>Name: A - Z</option>
+                    <option value="sort:nameZA"    <%= sort === 'nameZA'    ? 'selected' : '' %>>Name: Z - A</option>
+                </optgroup>
+                <optgroup label="Categories">
+                    <option value="cat:" <%= !category ? 'selected' : '' %>>All Categories</option>
+                    <option value="cat:New In" <%= category === 'New In' ? 'selected' : '' %>>New In</option>
+                    <option value="cat:Festive" <%= category === 'Festive' ? 'selected' : '' %>>Festive</option>
+                    <option value="cat:Lawn" <%= category === 'Lawn' ? 'selected' : '' %>>Lawn</option>
+                    <option value="cat:Luxe Pret" <%= category === 'Luxe Pret' ? 'selected' : '' %>>Luxe Pret</option>
+                    <option value="cat:BATIKstudio" <%= category === 'BATIKstudio' ? 'selected' : '' %>>BATIKstudio</option>
+                </optgroup>
+            </select>
+        </div>
+    </div>
+</div>
+
+<script>
+    function handleCombinedChange(val) {
+        if (!val) return;
+        var params = new URLSearchParams(window.location.search);
+        var parts = val.split(':');
+        var type = parts[0];
+        var value = parts.slice(1).join(':');
+
+        if (type === 'sort') {
+            if (value === 'default') params.delete('sort'); else params.set('sort', value);
+        } else if (type === 'cat') {
+            if (!value) params.delete('category'); else params.set('category', value);
+        }
+
+        // preserve search/min/max already present or from hidden inputs
+        var searchVal = document.getElementById('currentSearch').value;
+        var minVal = document.getElementById('currentMinPrice').value;
+        var maxVal = document.getElementById('currentMaxPrice').value;
+        if (searchVal) params.set('search', searchVal); else params.delete('search');
+        if (minVal) params.set('minPrice', minVal); else params.delete('minPrice');
+        if (maxVal) params.set('maxPrice', maxVal); else params.delete('maxPrice');
+
+        params.delete('page');
+        window.location = '/products?' + params.toString();
+    }
+</script>
+
+<!-- Products Grid -->
+<% if (products.length === 0) { %>
+    <div class="emptyState">
+        No products found. <a href="/products">View all products</a>
+    </div>
+<% } else { %>
+    <div class="products">
+        <% products.forEach(product => { %>
+        <div class="card">
+            <img src="/<%= product.image %>" alt="<%= product.name %>">
+            <div class="productInfo">
+                <h3 class="productTitle"><%= product.name %></h3>
+                <p class="productPrice">PKR <%= product.price.toLocaleString() %></p>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+<% } %>
+
+<!-- Pagination -->
+<div class="pagination">
+    <% if (currentPage > 1) { %>
+        <a href="/products?page=<%= currentPage-1 %>&search=<%= search %>&category=<%= category %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>&sort=<%= sort %>">← Prev</a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+        <a href="/products?page=<%= i %>&search=<%= search %>&category=<%= category %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>&sort=<%= sort %>"
+           class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+
+    <% if (currentPage < totalPages) { %>
+        <a href="/products?page=<%= currentPage+1 %>&search=<%= search %>&category=<%= category %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>&sort=<%= sort %>">Next →</a>
+    <% } %>
+</div>
+
+<!-- Footer -->
+<hr class="footerLine">
+<footer class="footer">
+    <div class="footerContainer">
+        <div class="footerCol">
+            <ul>
+                <li>About us</li>
+                <li>Store Locator</li>
+                <li>FAQs</li>
+                <li>Contact us</li>
+            </ul>
+        </div>
+        <div class="footerCol">
+            <ul>
+                <li>Shipping, Payments & Delivery</li>
+                <li>Exchange & Return Policy</li>
+                <li>Privacy Policy</li>
+                <li>Your Security Is Our Priority</li>
+            </ul>
+        </div>
+        <div class="footerCol subscribeCol">
+            <h4>SUBSCRIBE</h4>
+            <div class="subscribeInput">
+                <input type="email" placeholder="Enter your email">
+                <i class="fa-regular fa-envelope"></i>
+            </div>
+            <div class="footerSocials">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-x-twitter"></i>
+                <i class="fab fa-snapchat"></i>
+            </div>
+        </div>
+    </div>
+    <p class="copyright">© 2026 BATIK</p>
+</footer>
+
+<script>
+    function toggleMenu() {
+        const nav = document.getElementById('mobileNav');
+        nav.classList.toggle('open');
+    }
+
+    function toggleSearchBar() {
+        const searchContainer = document.getElementById('searchBarContainer');
+        searchContainer.classList.toggle('active');
+        if (searchContainer.classList.contains('active')) {
+            const input = document.querySelector('.searchBarInput');
+            if (input) input.focus();
+        }
+    }
+
+    function toggleFilterPopup() {
+        const filterPopup = document.getElementById('filterPopup');
+        if (filterPopup.style.display === 'none') {
+            filterPopup.style.display = 'block';
+        } else {
+            filterPopup.style.display = 'none';
+        }
+    }
+
+    function filterByCategory(category) {
+        const currentUrl = new URL(window.location);
+        if (category === '') {
+            currentUrl.searchParams.delete('category');
+        } else {
+            currentUrl.searchParams.set('category', category);
+        }
+        window.location.href = currentUrl.toString();
+    }
+
+    // Close search bar when clicking outside
+    document.addEventListener('click', function(event) {
+        const searchContainer = document.getElementById('searchBarContainer');
+        const searchIcon = document.querySelector('.headerIcons a');
+        if (searchContainer && searchIcon && !searchContainer.contains(event.target) && !searchIcon.contains(event.target)) {
+            searchContainer.classList.remove('active');
+        }
+    });
+
+    // Close filter popup when clicking outside
+    document.addEventListener('click', function(event) {
+        const filterPopup = document.getElementById('filterPopup');
+        const filterBtn = document.querySelector('.filterIconBtn');
+        if (filterPopup && filterBtn && !filterPopup.contains(event.target) && !filterBtn.contains(event.target)) {
+            filterPopup.style.display = 'none';
+        }
+    });
+
+    // Submit search on Enter
+    document.addEventListener('keypress', function(event) {
+        const searchInput = document.querySelector('.searchBarInput');
+        if (searchInput && event.key === 'Enter' && searchInput.value.trim()) {
+            searchInput.form.submit();
+        }
+    });
+
+    // Close search bar on Escape
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const searchContainer = document.getElementById('searchBarContainer');
+            if (searchContainer) searchContainer.classList.remove('active');
+            const filterPopup = document.getElementById('filterPopup');
+            if (filterPopup) filterPopup.style.display = 'none';
+        }
+    });
+
+    document.querySelectorAll('#mobileNav a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            document.getElementById('mobileNav').classList.remove('open');
+        });
+    });
+</script>
+
+</body>
+</html>
