@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="styleSheet" href="/batikClone.css">
+    <link rel="stylesheet" href="/auth.css">
+    <link rel="styleSheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> 
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+    .addToCartBtn { display:inline-block; padding:8px 12px; margin-top:8px; background:transparent; color:#000; border:1px solid #000; cursor:pointer; font-size:14px; }
+    .cartToggle { position:relative; display:inline-block; }
+    .cart-badge { background:#000; color:#fff; border:none; border-radius:50%; width:14px; height:14px; padding:0; font-size:10px; line-height:14px; position:absolute; top:-4px; right:-10px; display:none; text-align:center; box-sizing:border-box; box-shadow:0 1px 2px rgba(0,0,0,0.12); }
+    /* Cart modal */
+    #cartModal { position:fixed; right:20px; top:60px; width:360px; max-height:70vh; background:#fff; border:1px solid #ddd; box-shadow:0 6px 24px rgba(0,0,0,0.1); display:none; overflow:auto; z-index:9999; }
+    #cartModal .cart-header { padding:12px; border-bottom:1px solid #eee; font-weight:600; display:flex; justify-content:space-between; align-items:center; }
+    #cartCloseBtn { border:1px solid #ccc; background:#fff; cursor:pointer; width:28px; height:28px; line-height:24px; }
+    #cartModal .cart-items { padding:12px }
+    #cartModal .cart-item { display:flex; gap:8px; align-items:center; margin-bottom:10px }
+    #cartModal .cart-item img { width:54px; height:54px; object-fit:cover; border:1px solid #eee }
+    #cartModal .qty-controls { display:flex; gap:6px; align-items:center }
+    #cartModal .qty-controls button { width:28px; height:28px; border:1px solid #ccc; background:#fff; cursor:pointer }
+    #cartModal .cart-footer { padding:12px; border-top:1px solid #eee }
+    #cartModal .checkoutBtn { display:block; width:100%; padding:10px; background:#000; color:#fff; border:none; cursor:pointer }
+    </style>
+</head>
+<body>
+
+    <div class="socialBar">
+    <i class="fab fa-instagram"></i>
+    <i class="fab fa-facebook"></i>
+    <i class="fab fa-x-twitter"></i>
+    <i class="fab fa-snapchat"></i>
+</div>
+
+   <!-- Desktop Header (hidden on mobile) -->
+<header class="mainHeader">
+    <div class="headerLeft">
+        <div class="headerIcons">
+            <a href="javascript:void(0)" onclick="toggleSearchBar()" title="Search"><i class="fas fa-search"></i></a>
+        </div>
+        <a href="/products?category=New In">NEW IN</a>
+        <div class="dropdown">
+            <a href="/products?category=Festive">FESTIVE EID 2026 <i class="fas fa-chevron-down"></i></a>
+        </div>
+        <a href="/products?category=Lawn">Trending Now</a>
+    </div>
+
+    <div class="headerLogo">
+        <img src="/img/img0.png">
+    </div>
+
+    <div class="rightSide">
+        <div class="rightTop">
+            <div class="headerRight">
+                <div class="dropdown">
+                    <a href="#">WINTER 2025 <i class="fas fa-chevron-down"></i></a>
+                </div>
+                <div class="dropdown">
+                    <a href="#">PRET <i class="fas fa-chevron-down"></i></a>
+                </div>
+                <div class="dropdown">
+                    <a href="#">BATIKstudio <i class="fas fa-chevron-down"></i></a>
+                </div>
+            </div>
+
+        <div class="headerIcons">
+
+    <% if (currentUser) { %>
+        <a href="/logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+    <% } else { %>
+        <a href="/login" title="Login"><i class="fas fa-user"></i></a>
+    <% } %>
+
+    <a href="javascript:void(0)" class="cartToggle" title="Cart"><i class="fas fa-shopping-bag"></i><span class="cart-badge" id="cartCount" style="display:none">0</span></a>
+</div>
+        </div>
+        <div class="saleLink">
+            <a href="#">SALE</a>
+        </div>
+    </div>
+</header>
+
+
+<div id="searchBarContainer" class="searchBarContainer">
+    <form action="/products" method="GET" class="searchBarForm">
+        <input type="text" name="search" placeholder="Search products..." class="searchBarInput">
+        <button type="button" onclick="toggleSearchBar()" class="searchBarClose" title="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </form>
+</div>
+
+<!-- Mobile Header (visible only on mobile) -->
+<div class="mobileHeaderBar">
+    <div class="menuToggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+    <div class="mobileHeaderLogo">
+        <img src="/img/img0.png" style="max-width: 140px;">
+    </div>
+
+    <div class="mobileActionIcons">
+    <a href="javascript:void(0)" onclick="toggleSearchBar()"><i class="fas fa-search"></i></a>
+    <% if (currentUser) { %>
+        <a href="/logout"><i class="fas fa-sign-out-alt"></i></a>
+    <% } else { %>
+        <a href="/login"><i class="fas fa-user"></i></a>
+    <% } %>
+    <a href="javascript:void(0)" class="cartToggle"><i class="fas fa-shopping-bag"></i><span class="cart-badge" id="cartCount">0</span></a>
+</div>
+
+</div>
+
+<!-- Mobile Navigation Menu (Hidden by default) -->
+<div id="mobileNav" class="mobileNav">
+    <a href="/products?category=New In">NEW IN</a>
+    <a href="/products?category=Festive">FESTIVE EID 2026</a>
+    <a href="/products?category=Lawn">Trending Now</a>
+    <a href="#">WINTER 2025</a>
+    <a href="#">PRET</a>
+    <a href="#">BATIKstudio</a>
+    <a href="#">SALE</a>
+    
+</div>
+
+<% if (error && error.length > 0) { %>
+    <div class="flashMsg error"><%= error %></div>
+<% } %>
+<% if (success && success.length > 0) { %>
+    <div class="flashMsg success"><%= success %></div>
+<% } %>
+<% if (locals.query && locals.query.loggedout) { %>
+    <div class="flashMsg success">You have successfully logged out.</div>
+<% } %>
+
+    <div class = "announcementBar">
+    For cash on Delivery orders, kindly pay in cash only when your parcel is handed over.
+    No online transfers required  
+    </div>
+ 
+    <section class="imageSection">
+    <video class="mainVideo" autoplay muted loop>
+        <source src="/img/video2.mp4" type="video/mp4">
+    </video>
+     
+<div class = "img" ></div>
+</section>
+
+
+<section class="featuredRow">
+
+  <!-- LEFT SMALL IMAGE -->
+  <div class="sideCol">
+    <div class="productCard smallCard">
+      <img src="/img/img10.png" class="cardImg" alt="Left Small">
+      <div class="cardInfo">
+        <h4>Product 10</h4>
+        <p>PKR 12,990</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CENTER BIG VIDEO -->
+<div class="productCard bigCard">
+    <video class="cardImg" autoplay muted loop>
+        <source src="/img/video1.mp4" type="video/mp4">
+    </video>
+    <div class="cardInfo">
+      <h4>Product 12</h4>
+      <p>PKR 18,990</p>
+    </div>
+</div>
+
+  <!-- RIGHT SMALL IMAGE -->
+  <div class="sideCol">
+    <div class="productCard smallCard">
+      <img src="/img/img12.png" class="cardImg" alt="Right Small">
+      <div class="cardInfo">
+        <h4>Product 13</h4>
+        <p>PKR 14,990</p>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+<div class="featuredNav">
+    <div class="arrows">
+        <i class="fa-solid fa-arrow-left"></i>
+        <i class="fa-solid fa-arrow-right"></i>
+    </div>
+
+    <div class="trendingText">
+        Trending Now
+    </div>
+</div>
+
+   <div class="trendingImages">
+
+    <div class="trendCard">
+        <img src="/img/img13.png" alt="">
+        <p>New IN</p>
+    </div>
+
+    <div class="trendCard">
+        <img src="/img/img14.png" alt="">
+        <p>BATIKstudio</p>
+    </div>
+
+</div>
+
+
+   <h2 class="featuredTitle">Featured Products</h2>
+
+   <div class="topBar">
+    <button class="filterButton">
+    <i class="fas fa-filter"></i> Filter
+    </button>
+
+    <select id="SortBy" class="sortSelection">
+        <option value="bestSelling">Best selling</option>
+    </select>
+</div>
+    <div class="products">
+
+    <div class="card">
+    <img src="/img/img2.png">
+
+    <div class="productInfo">
+        <h3 class="productTitle">Juliana 3Pc - Festive Luxe Pret</h3>
+        <p class="productPrice">PKR 17,990</p>
+        <button class="addToCartBtn">Add to cart</button>
+    </div>
+    </div>
+    <div class="card">
+    <img src="/img/img3.png">
+    <div class="productInfo">
+        <h3 class="productTitle">Rust Livia 3Pc - Festive Luxe Pret</h3>
+        <p class="productPrice">PKR 16,990</p>
+        <button class="addToCartBtn">Add to cart</button>
+    </div>
+    </div>
+    <div class="card">
+    <img src="/img/img4.png">
+    <div class="productInfo">
+        <h3 class="productTitle">Pink Iris 3Pc - Festive Luxe Pret</h3>
+        <p class="productPrice">PKR 20,990</p>
+        <button class="addToCartBtn">Add to cart</button>
+    </div>
+    </div>
+    <div class="card">
+    <img src="/img/img5.png">
+    <div class="productInfo">
+        <h3 class="productTitle">Maya 3Pc - Festive Luxe Pret</h3>
+        <p class="productPrice">PKR 19,990</p>
+        <button class="addToCartBtn">Add to cart</button>
+    </div>
+ </div>
+ </div>
+
+ <div class="products">
+
+    <div class="card">
+        <img src="/img/img6.png">
+        <div class="productInfo">
+            <h3 class="productTitle">Cicillia 3Pc - Festive Eid Prints</h3>
+            <p class="productPrice">PKR 11,990</p>
+            <button class="addToCartBtn">Add to cart</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="/img/img7.png">
+        <div class="productInfo">
+            <h3 class="productTitle">Noor 3Pc - Festive Luxe Pret</h3>
+            <p class="productPrice">PKR 15,990</p>
+            <button class="addToCartBtn">Add to cart</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="/img/img8.png">
+        <div class="productInfo">
+            <h3 class="productTitle">Summer Daze 3Pc - Festive Eid Prints</h3>
+            <p class="productPrice">PKR 11,900</p>
+            <button class="addToCartBtn">Add to cart</button>
+        </div>
+    </div>
+
+    <div class="card">
+        <img src="/img/img9.png">
+        <div class="productInfo">
+            <h3 class="productTitle">Midnight 3Pc - Festive Eid Prints</h3>
+            <p class="productPrice">PKR 10,990</p>
+            <button class="addToCartBtn">Add to cart</button>
+
+        </div>
+    </div>
+
+</div>
+
+<div class ="blogSection">
+    <h2 class="blogs">OUR BLOGS</h2>
+    <button class = "viewAllButton">VIEW ALL</button>
+</div>
+
+<section class="blogCards">
+
+    <div class="blogCard">
+        <img src="/img/img20.png" alt="">
+        <p class="blogDate">Mar 04, 2026</p>
+        <h3 class="blogTitle">Charbagh | Where Eid Charm Blooms in Prints</h3>
+    </div>
+
+    <div class="blogCard">
+        <img src="/img/img22.png" alt="">
+        <p class="blogDate">Mar 02, 2026</p>
+        <h3 class="blogTitle">Miorah: The Giza Eid Ensemble, Where Festive Elegance Begins</h3>
+    </div>
+
+    <div class="blogCard">
+        <img src="/img/img21.png" alt="">
+        <p class="blogDate">Feb 26, 2026</p>
+        <h3 class="blogTitle">Noor-e-Eid | Your Glow & Go for the Perfect Eid Look </h3>
+    </div>
+
+</section>
+<hr class="footerLine">
+
+<footer class="footer">
+
+<div class="footerContainer">
+
+    <!-- LEFT -->
+    <div class="footerCol">
+        <ul>
+            <li>About us</li>
+            <li>Store Locator</li>
+            <li>FAQs</li>
+            <li>Contact us</li>
+        </ul>
+    </div>
+
+    <!-- CENTER -->
+    <div class="footerCol">
+        <ul>
+            <li>Shipping, Payments & Delivery</li>
+            <li>Exchange & Return Policy</li>
+            <li>Privacy Policy</li>
+            <li>Your Security Is Our Priority</li>
+        </ul>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="footerCol subscribeCol">
+
+        <h4>SUBSCRIBE</h4>
+
+        <div class="subscribeInput">
+            <input type="email" placeholder="Enter your email">
+            <i class="fa-regular fa-envelope"></i>
+        </div>
+
+        <div class="footerSocials">
+            <i class="fab fa-instagram"></i>
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-x-twitter"></i>
+            <i class="fab fa-snapchat"></i>
+        </div>
+
+    </div>
+
+</div>
+
+<p class="copyright">© 2026 BATIK</p>
+
+<!-- Cart modal -->
+<div id="cartModal" aria-hidden="true">
+    <div class="cart-header">Cart <button id="cartCloseBtn" type="button">x</button></div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+        <div style="margin-bottom:8px">Total: <span id="cartTotal">PKR 0</span></div>
+        <button id="checkoutBtn" class="checkoutBtn">Checkout</button>
+    </div>
+</div>
+
+<script>
+    function toggleSearchBar() {
+        const searchContainer = document.getElementById('searchBarContainer');
+        if (searchContainer) {
+            searchContainer.classList.toggle('active');
+            if (searchContainer.classList.contains('active')) {
+                const input = searchContainer.querySelector('.searchBarInput');
+                if (input) input.focus();
+            }
+        }
+    }
+
+    function toggleMenu() {
+        const nav = document.getElementById('mobileNav');
+        if (nav) {
+            nav.classList.toggle('open');
+        }
+    }
+        // Cart logic
+        (function(){
+            const cartKey = 'lab_cart_v1';
+            const cartCloseBtn = document.getElementById('cartCloseBtn');
+            const cartCountEls = document.querySelectorAll('.cart-badge');
+            const cartModal = document.getElementById('cartModal');
+            const cartItemsEl = document.getElementById('cartItems');
+            const cartTotalEl = document.getElementById('cartTotal');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+
+            function loadCart(){
+                try{ return JSON.parse(localStorage.getItem(cartKey)) || {}; }catch(e){return {}} }
+            function saveCart(cart){ localStorage.setItem(cartKey, JSON.stringify(cart)); updateBadge(); }
+
+            function updateBadge(){ if(!cartCountEls) return; const cart = loadCart(); let qty=0; Object.values(cart).forEach(i=>qty+=i.qty||0); cartCountEls.forEach(el=>{ if(qty>0){ el.style.display='inline-block'; el.textContent = qty } else { el.style.display='none' } }); }
+
+            function formatPrice(text){ // assume PKR NNN or $ etc
+                const num = parseFloat((text||'').replace(/[^0-9\.]/g,''))||0; return num;
+            }
+
+            function renderCart(){ const cart = loadCart(); cartItemsEl.innerHTML=''; let total=0; Object.keys(cart).forEach(key=>{ const item=cart[key]; const div=document.createElement('div'); div.className='cart-item'; div.innerHTML = `<img src="${item.img}" alt=""><div style="flex:1"><div style="font-size:13px">${item.title}</div><div style="font-size:13px;color:#666">PKR ${item.price.toLocaleString()}</div></div><div class="qty-controls"><button data-action="decr" data-id="${key}">-</button><div style="min-width:24px;text-align:center">${item.qty}</div><button data-action="incr" data-id="${key}">+</button></div>`; cartItemsEl.appendChild(div); total += item.price * item.qty; }); cartTotalEl.textContent = 'PKR ' + total.toLocaleString(); }
+
+            function closeCart(){
+                cartModal.style.display = 'none';
+            }
+
+            document.addEventListener('click', function(e){
+                if(e.target.matches('.addToCartBtn')){
+                    const card = e.target.closest('.card');
+                    const title = card.querySelector('.productTitle').textContent.trim();
+                    const priceText = card.querySelector('.productPrice').textContent.trim();
+                    const img = card.querySelector('img') ? card.querySelector('img').src : '';
+                    const price = formatPrice(priceText);
+                    const key = title.replace(/\s+/g,'_').toLowerCase();
+                    const cart = loadCart();
+                    if(!cart[key]) cart[key] = { title, price, img, qty:0 };
+                    cart[key].qty += 1;
+                    saveCart(cart);
+                    renderCart();
+                }
+                if(e.target.closest && e.target.closest('.cartToggle')){
+                    cartModal.style.display = cartModal.style.display === 'block' ? 'none' : 'block';
+                    renderCart();
+                }
+                if(cartModal.style.display === 'block' && !e.target.closest('#cartModal') && !e.target.closest('.cartToggle')){
+                    closeCart();
+                }
+                if(e.target.dataset && (e.target.dataset.action === 'incr' || e.target.dataset.action === 'decr')){
+                    const id = e.target.dataset.id; const action = e.target.dataset.action; const cart = loadCart(); if(cart[id]){ if(action==='incr') cart[id].qty +=1; else cart[id].qty = Math.max(0, cart[id].qty-1); if(cart[id].qty===0) delete cart[id]; saveCart(cart); renderCart(); }
+                }
+            });
+
+            if (cartCloseBtn) {
+                cartCloseBtn.addEventListener('click', closeCart);
+            }
+
+            document.addEventListener('keydown', function(e){
+                if(e.key === 'Escape') closeCart();
+            });
+
+            checkoutBtn.addEventListener('click', function(){ window.location.href = '/checkout'; });
+
+            // initial
+            updateBadge(); renderCart();
+        })();
+</script>
+</html>
