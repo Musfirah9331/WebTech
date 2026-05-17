@@ -62,7 +62,8 @@ const upload = multer({ storage: storage });
 // ==================
 
 app.get('/', (req, res) => {
-    res.render('index');
+    const loggedout = req.query.loggedout || false;
+    res.render('index', { loggedout });
 });
 
 app.get('/products', async (req, res) => {

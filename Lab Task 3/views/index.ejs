@@ -131,7 +131,7 @@
 <% if (success && success.length > 0) { %>
     <div class="flashMsg success"><%= success %></div>
 <% } %>
-<% if (locals.query && locals.query.loggedout) { %>
+<% if (loggedout) { %>
     <div class="flashMsg success">You have successfully logged out.</div>
 <% } %>
 
