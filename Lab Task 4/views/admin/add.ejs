@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product - BATIK Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/batikClone.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="adminWrapper" id="adminWrapper">
+
+    <div class="adminSidebar" id="adminSidebar">
+        <button type="button" class="sidebarToggleIn" onclick="toggleSidebar()" title="Toggle sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h2>BATIK ADMIN</h2>
+        <a href="/admin"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="/admin/add"><i class="fas fa-plus"></i> Add Product</a>
+        <a href="/"><i class="fas fa-store"></i> View Store</a>
+    </div>
+
+    <div class="adminContent">
+        <div class="adminTopBar">
+            <button type="button" class="adminMenuBtn" onclick="toggleSidebar()" title="Toggle sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <div class="formCard">
+            <h2>ADD NEW PRODUCT</h2>
+
+            <form action="/admin/add" method="POST" enctype="multipart/form-data" id="addForm">
+
+                <div class="formGroup">
+                    <label>Product Name *</label>
+                    <input type="text" name="name" id="name" placeholder="e.g. Bismil 2Pc - Embroidered Lawn">
+                    <div class="errorMsg" id="nameErr">Name is required</div>
+                </div>
+
+                <div class="formGroup">
+                    <label>Price (PKR) *</label>
+                    <input type="number" name="price" id="price" placeholder="e.g. 8490">
+                    <div class="errorMsg" id="priceErr">Valid price is required</div>
+                </div>
+
+                <div class="formGroup">
+                    <label>Category *</label>
+                    <select name="category" id="category">
+                        <option value="">-- Select Category --</option>
+                        <option value="New In">New In</option>
+                        <option value="Festive">Festive</option>
+                        <option value="Lawn">Lawn</option>
+                        <option value="Luxe Pret">Luxe Pret</option>
+                        <option value="BATIKstudio">BATIKstudio</option>
+                    </select>
+                    <div class="errorMsg" id="categoryErr">Category is required</div>
+                </div>
+
+                <div class="formGroup">
+                    <label>Rating (1-5) *</label>
+                    <input type="number" name="rating" id="rating" placeholder="e.g. 4.5" min="1" max="5" step="0.1">
+                    <div class="errorMsg" id="ratingErr">Rating between 1-5 is required</div>
+                </div>
+
+                <div class="formGroup">
+                    <label>Stock *</label>
+                    <input type="number" name="stock" id="stock" placeholder="e.g. 10" min="0">
+                    <div class="errorMsg" id="stockErr">Stock is required</div>
+                </div>
+
+                <div class="formGroup">
+                    <label>Product Image *</label>
+                    <input type="file" name="image" id="image" accept="image/*">
+                    <div class="errorMsg" id="imageErr">Image is required</div>
+                </div>
+
+                <div style="margin-top: 30px;">
+                    <button type="submit" class="submitBtn">ADD PRODUCT</button>
+                    <a href="/admin" class="cancelBtn">CANCEL</a>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    const adminSidebar = document.getElementById('adminSidebar');
+    const adminWrapper = document.getElementById('adminWrapper');
+
+    function toggleSidebar() {
+        adminSidebar.classList.toggle('open');
+        adminWrapper.classList.toggle('sidebar-open');
+    }
+
+    document.addEventListener('click', function(event) {
+        const clickedMenuBtn = event.target.closest('.adminMenuBtn');
+        const clickedSidebarBtn = event.target.closest('.sidebarToggleIn');
+        if (!clickedMenuBtn && !clickedSidebarBtn && !adminSidebar.contains(event.target)) {
+            adminSidebar.classList.remove('open');
+            adminWrapper.classList.remove('sidebar-open');
+        }
+    });
+
+    document.getElementById('addForm').addEventListener('submit', function(e) {
+        let valid = true;
+
+        const fields = [
+            { id: 'name', errId: 'nameErr', check: v => v.trim() !== '' },
+            { id: 'price', errId: 'priceErr', check: v => v > 0 },
+            { id: 'category', errId: 'categoryErr', check: v => v !== '' },
+            { id: 'rating', errId: 'ratingErr', check: v => v >= 1 && v <= 5 },
+            { id: 'stock', errId: 'stockErr', check: v => v >= 0 },
+            { id: 'image', errId: 'imageErr', check: v => v !== '' }
+        ];
+
+        fields.forEach(field => {
+            const input = document.getElementById(field.id);
+            const err = document.getElementById(field.errId);
+            if (!field.check(input.value)) {
+                err.style.display = 'block';
+                input.style.borderColor = 'red';
+                valid = false;
+            } else {
+                err.style.display = 'none';
+                input.style.borderColor = '#ddd';
+            }
+        });
+
+        if (!valid) e.preventDefault();
+    });
+</script>
+</body>
+</html>

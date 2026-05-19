@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Checkout</title>
+    <link rel="stylesheet" href="/batikClone.css">
+</head>
+<body>
+    <% if (error && error.length > 0) { %>
+    <div class="flashBar error"><%= error %></div>
+<% } %>
+<% if (success && success.length > 0) { %>
+    <div class="flashBar success"><%= success %></div>
+<% } %>
+
+    <% if (error && error.length) { %>
+        <div class="flashBar error"><%= error %></div>
+    <% } %>
+    <% if (success && success.length) { %>
+        <div class="flashBar success"><%= success %></div>
+    <% } %>
+
+    <h2>Checkout</h2>
+    <p>This is a demo checkout page. Only logged-in users can access this.</p>
+
+    <a href="/">Back to shop</a>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard - BATIK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/batikClone.css">
+    <link rel="stylesheet" href="/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="adminWrapper" id="adminWrapper">
+
+    <!-- Sidebar -->
+    <div class="adminSidebar" id="adminSidebar">
+        <button type="button" class="sidebarToggleIn" onclick="toggleSidebar()" title="Toggle sidebar">
+            <i class="fas fa-bars"></i>
+        </button>
+        <h2>BATIK ADMIN</h2>
+        <a href="/admin"><i class="fas fa-th-large"></i> Dashboard</a>
+        <a href="/admin/add"><i class="fas fa-plus"></i> Add Product</a>
+        <a href="/"><i class="fas fa-store"></i> View Store</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="adminContent">
+        <div class="adminHeader">
+            <button type="button" class="adminMenuBtn" onclick="toggleSidebar()" title="Toggle sidebar">
+                <i class="fas fa-bars"></i>
+            </button>
+            <h1>ADMIN DASHBOARD</h1>
+            <a href="/admin/add" class="addBtn">+ ADD PRODUCT</a>
+        </div>
+
+        <!-- Stats -->
+        <div class="statsRow">
+            <div class="statCard">
+                <h3><%= products.length %></h3>
+                <p>Total Products</p>
+            </div>
+            <div class="statCard">
+                <h3><%= products.filter(p => p.stock > 0).length %></h3>
+                <p>In Stock</p>
+            </div>
+            <div class="statCard">
+                <h3><%= products.filter(p => p.stock === 0).length %></h3>
+                <p>Out of Stock</p>
+            </div>
+        </div>
+
+        <!-- Products Table -->
+        <table class="adminTable">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Rating</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% products.forEach(product => { %>
+                <tr>
+                    <td><img src="/<%= product.image %>" alt="<%= product.name %>"></td>
+                    <td><%= product.name %></td>
+                    <td><%= product.category %></td>
+                    <td>PKR <%= product.price.toLocaleString() %></td>
+                    <td><%= product.stock %></td>
+                    <td><%= product.rating %></td>
+                    <td>
+                        <a href="/admin/edit/<%= product._id %>" class="editBtn">
+                            <i class="fas fa-edit"></i> Edit
+                        </a>
+                        <form action="/admin/delete/<%= product._id %>" method="POST" style="display:inline;">
+                            <button type="submit" class="deleteBtn"
+                                onclick="return confirm('Are you sure you want to delete <%= product.name %>?')">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<script>
+    const adminSidebar = document.getElementById('adminSidebar');
+    const adminWrapper = document.getElementById('adminWrapper');
+
+    function toggleSidebar() {
+        adminSidebar.classList.toggle('open');
+        adminWrapper.classList.toggle('sidebar-open');
+    }
+
+    document.addEventListener('click', function(event) {
+        const clickedMenuBtn = event.target.closest('.adminMenuBtn');
+        const clickedSidebarBtn = event.target.closest('.sidebarToggleIn');
+        if (!clickedMenuBtn && !clickedSidebarBtn && !adminSidebar.contains(event.target)) {
+            adminSidebar.classList.remove('open');
+            adminWrapper.classList.remove('sidebar-open');
+        }
+    });
+</script>
+</body>
+</html>

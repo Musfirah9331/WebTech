@@ -1,0 +1,334 @@
+/* ========== ADMIN PANEL STYLES ========== */
+
+.adminWrapper {
+    display: flex;
+    min-height: 100vh;
+    font-family: 'Jost', sans-serif;
+}
+
+.adminSidebar {
+    width: 220px;
+    background: #111;
+    color: white;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    position: fixed;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 1200;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+}
+
+.adminSidebar.open {
+    transform: translateX(0);
+}
+
+.adminWrapper.sidebar-open .adminContent {
+    margin-left: 220px;
+}
+
+.adminSidebar h2 {
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 3px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 15px;
+}
+
+.adminSidebar a {
+    color: #ccc;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 1px;
+    padding: 8px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: color 0.2s;
+}
+
+.adminSidebar a:hover {
+    color: white;
+}
+
+.adminContent {
+    margin-left: 0;
+    padding: 40px;
+    width: 100%;
+    background: #f9f9f9;
+    min-height: 100vh;
+    transition: margin-left 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.adminTopBar {
+    display: none;
+}
+
+.adminMenuBtn {
+    width: 42px;
+    height: 42px;
+    border: 1px solid #222;
+    background: #111;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    display: none;
+}
+
+.adminHeader .adminMenuBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: auto;
+}
+
+.adminMenuBtn:hover {
+    background: #333;
+}
+
+.sidebarToggleIn {
+    align-self: flex-start;
+    width: 36px;
+    height: 36px;
+    border: 1px solid #444;
+    background: transparent;
+    color: #fff;
+    cursor: pointer;
+}
+
+.sidebarToggleIn:hover {
+    background: #222;
+}
+
+.adminWrapper.sidebar-open .adminTopBar {
+    display: none;
+}
+
+.adminHeader {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-bottom: 30px;
+    width: 100%;
+    gap: 20px;
+}
+
+.adminHeader h1 {
+    font-size: 24px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    order: 1;
+    margin: 0;
+}
+
+.adminWrapper.sidebar-open .adminHeader .adminMenuBtn {
+    display: none;
+}
+
+.addBtn {
+    padding: 10px 24px;
+    background: black;
+    color: white;
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    margin-left: auto;
+    order: 2;
+}
+
+.addBtn:hover {
+    background: #333;
+}
+
+.statsRow {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.statCard {
+    background: white;
+    padding: 20px 25px;
+    border: 1px solid #eee;
+    text-align: center;
+}
+
+.statCard h3 {
+    font-size: 32px;
+    font-weight: 400;
+    margin-bottom: 5px;
+}
+
+.statCard p {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+.adminTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    font-size: 14px;
+}
+
+.adminTable th {
+    background: #111;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+.adminTable td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #eee;
+    color: #333;
+}
+
+.adminTable tr:hover td {
+    background: #fafafa;
+}
+
+.adminTable img {
+    width: 50px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.editBtn {
+    padding: 6px 14px;
+    background: white;
+    border: 1px solid #333;
+    color: #333;
+    text-decoration: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    margin-right: 6px;
+}
+
+.editBtn:hover {
+    background: #333;
+    color: white;
+}
+
+.deleteBtn {
+    padding: 6px 14px;
+    background: white;
+    border: 1px solid #cc0000;
+    color: #cc0000;
+    font-family: 'Jost', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.deleteBtn:hover {
+    background: #cc0000;
+    color: white;
+}
+
+/* Form Styles */
+.formCard {
+    background: white;
+    padding: 40px;
+    width: 100%;
+    max-width: 600px;
+    border: 1px solid #eee;
+}
+
+.formCard h2 {
+    font-size: 20px;
+    font-weight: 400;
+    letter-spacing: 2px;
+    margin-bottom: 30px;
+}
+
+.formGroup {
+    margin-bottom: 20px;
+}
+
+.formGroup label {
+    display: block;
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #666;
+    margin-bottom: 8px;
+}
+
+.formGroup input,
+.formGroup select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #ddd;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    outline: none;
+}
+
+.formGroup input:focus,
+.formGroup select:focus {
+    border-color: #333;
+}
+
+.currentImg {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    display: block;
+    border: 1px solid #eee;
+}
+
+.submitBtn {
+    padding: 12px 30px;
+    background: black;
+    color: white;
+    border: none;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    letter-spacing: 1px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.submitBtn:hover {
+    background: #333;
+}
+
+.cancelBtn {
+    padding: 12px 30px;
+    background: white;
+    color: #333;
+    border: 1px solid #ddd;
+    font-family: 'Jost', sans-serif;
+    font-size: 14px;
+    text-decoration: none;
+}
+
+.cancelBtn:hover {
+    border-color: #333;
+}
+
+.errorMsg {
+    color: red;
+    font-size: 12px;
+    margin-top: 5px;
+    display: none;
+}

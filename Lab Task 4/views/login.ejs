@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - BATIK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="authBody">
+
+<div class="authPageWrap">
+<div class="authCard">
+
+    <% if (typeof loggedout !== 'undefined' && loggedout) { %>
+        <div class="flashMsg success">You have successfully logged out.</div>
+    <% } else { %>
+        <% if (error && error.length > 0) { %>
+            <div class="flashMsg error"><%= error[0] %></div>
+        <% } %>
+        <% if (success && success.length > 0) { %>
+            <div class="flashMsg success"><%= success[0] %></div>
+        <% } %>
+    <% } %>
+
+    <div class="authLogo">
+        <img src="/img/img0.png" alt="BATIK Logo">
+    </div>
+
+    <div class="authHeadingBlock">
+        <h2>Sign in</h2>
+        <p class="authSubtext">Sign in or create an account</p>
+    </div>
+
+    <form action="/login" method="POST">
+        <div class="formGroup">
+            <label>Email Address</label>
+            <input type="email" name="email" required placeholder="you@example.com" autocomplete="email">
+        </div>
+        <div class="formGroup">
+            <label>Password</label>
+            <input type="password" name="password" required placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button type="submit" class="authBtn">LOGIN</button>
+    </form>
+
+    <p class="authLink">Don't have an account? <a href="/register">Register here</a></p>
+    <p class="authLink"><a href="/">← Back to Store</a></p>
+
+</div>
+</div>
+
+</body>
+</html>

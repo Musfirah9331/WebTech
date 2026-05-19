@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BATIK NEW Arrivals | Ready to Wear</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/batikClone.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div class="socialBar">
+    <i class="fab fa-instagram"></i>
+    <i class="fab fa-facebook"></i>
+    <i class="fab fa-x-twitter"></i>
+    <i class="fab fa-snapchat"></i>
+</div>
+
+<header class = "mainHeader">
+    <div class="menuToggle" onclick="toggleMenu()">
+    <i class="fas fa-bars"></i>
+    </div>
+    
+    <div class = "headerLeft">
+
+        <div class="headerIcons">
+        <a href="javascript:void(0)" onclick="toggleSearchBar()" title="Search"><i class="fas fa-search"></i></a>
+        </div>
+        <a href="/products?category=New In">NEW IN</a>
+        <div class = "dropdown">
+        <a href = "/products?category=Festive">FESTIVE EID 2026 <i class="fas fa-chevron-down"></i></a>
+        </div>
+        <a href = "/products?category=Lawn">Trending Now</a>
+
+    </div>
+
+<div class = "headerLogo">
+    <img src = "/img/img0.png">
+</div>
+<div class="rightSide">
+
+    <div class="rightTop">
+
+        <div class="headerRight">
+            <div class="dropdown">
+                <a href="#">WINTER 2025 <i class="fas fa-chevron-down"></i></a>
+            </div>
+            <div class="dropdown">
+                <a href="#">PRET <i class="fas fa-chevron-down"></i></a>
+            </div>
+            <div class="dropdown">
+                <a href="#">BATIKstudio <i class="fas fa-chevron-down"></i></a>
+            </div>
+        </div>
+
+            <div class="headerIcons">
+            <% if (currentUser) { %>
+                <a href="/logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+            <% } else { %>
+                <a href="/login" title="Login"><i class="fas fa-user"></i></a>
+            <% } %>
+            <a href="#" class="cartToggle" title="Cart"><i class="fas fa-shopping-bag"></i><span id="cartCount" style="display:none" class="cart-badge">0</span></a>
+        </div>
+
+    </div>
+
+    <div class="saleLink">
+        <a href="#">SALE</a>
+    </div>
+
+</div>
+    </div>    
+</header>
+
+<!-- Mobile Header (visible only on mobile) -->
+<div class="mobileHeaderBar">
+    <div class="menuToggle" onclick="toggleMenu()">
+        <i class="fas fa-bars"></i>
+    </div>
+    <div class="mobileHeaderLogo">
+        <img src="/img/img0.png" style="max-width: 140px;">
+    </div>
+        <div class="mobileActionIcons">
+        <a href="javascript:void(0)" onclick="toggleSearchBar()"><i class="fas fa-search"></i></a>
+        <% if (currentUser) { %>
+            <a href="/logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+        <% } else { %>
+            <a href="/login" title="Login"><i class="fas fa-user"></i></a>
+        <% } %>
+        <a href="#" class="cartToggle"><i class="fas fa-shopping-bag"></i><span id="cartCount" style="display:none" class="cart-badge">0</span></a>
+    </div>
+</div>
+
+<!-- Mobile Navigation Menu -->
+<div id="mobileNav" class="mobileNav">
+    <a href="/products?category=New In">NEW IN</a>
+    <a href="/products?category=Festive">FESTIVE EID 2026</a>
+    <a href="/products?category=Lawn">Trending Now</a>
+    <a href="#">WINTER 2025</a>
+    <a href="#">PRET</a>
+    <a href="#">BATIKstudio</a>
+    <a href="#">SALE</a>
+</div>
+
+<!-- Search Bar (Hidden by default) -->
+<div id="searchBarContainer" class="searchBarContainer">
+    <form action="/products" method="GET" class="searchBarForm">
+        <input type="hidden" name="category" value="<%= category %>">
+        <input type="hidden" name="minPrice" value="<%= minPrice %>">
+        <input type="hidden" name="maxPrice" value="<%= maxPrice %>">
+        <input type="hidden" name="sort" value="<%= sort %>">
+        <input type="text" name="search" placeholder="Search products..." class="searchBarInput" value="<%= search %>" autofocus>
+        <button type="button" onclick="toggleSearchBar()" class="searchBarClose" title="Close">
+            <i class="fas fa-times"></i>
+        </button>
+    </form>
+</div>
+
+<% if (success && success.length > 0) { %>
+    <div class="flashBar success"><%= success %></div>
+<% } %>
+<% if (error && error.length > 0) { %>
+    <div class="flashBar error"><%= error %></div>
+<% } %>
+
+<div class = "announcementBar">
+For cash on Delivery orders, kindly pay in cash only when your parcel is handed over.
+No online transfers required  
+</div>
+
+<!-- Page Title -->
+<h2 class="featuredTitle">BATIK NEW ARRIVALS</h2>
+
+<!-- Filter + Sort Bar -->
+<div class="filterSection">
+    <div class="filterContainer">
+        <!-- Filter Icon & Price Popup -->
+        <div class="filterIcon">
+            <button onclick="toggleFilterPopup()" class="filterIconBtn" title="Filter by Price">
+                <i class="fas fa-filter"></i> Filter
+            </button>
+        </div>
+
+        <!-- Price Filter Popup (Hidden by default) -->
+        <div id="filterPopup" class="filterPopup" style="display: none;">
+            <form action="/products" method="GET" class="priceFilterForm">
+                <input type="hidden" name="search" value="<%= search %>">
+                <input type="hidden" name="category" value="<%= category %>">
+                <input type="hidden" name="sort" value="<%= sort %>">
+                
+                <div class="priceFilterGroup">
+                    <label>From</label>
+                    <input type="number" name="minPrice" placeholder="From PKR" value="<%= minPrice %>" class="priceField">
+                </div>
+
+                <div class="priceFilterGroup">
+                    <label>To</label>
+                    <input type="number" name="maxPrice" placeholder="To PKR" value="<%= maxPrice %>" class="priceField">
+                </div>
+
+                <div class="priceFilterActions">
+                    <button type="submit" class="priceFilterApply">Apply</button>
+                    <a href="/products?category=<%= category %>&search=<%= search %>&sort=<%= sort %>" class="priceFilterReset">Reset</a>
+                </div>
+                
+                <button type="button" onclick="toggleFilterPopup()" class="priceFilterClose">
+                    <i class="fas fa-times"></i>
+                </button>
+            </form>
+        </div>
+
+        <!-- Single Combined Select (Sort + Categories) -->
+        <div class="filterBox">
+            <input type="hidden" id="currentSearch" value="<%= search %>">
+            <input type="hidden" id="currentMinPrice" value="<%= minPrice %>">
+            <input type="hidden" id="currentMaxPrice" value="<%= maxPrice %>">
+
+            <select id="combinedFilter" class="filterSingle" onchange="handleCombinedChange(this.value)" title="Featured">
+                <option value="sort:default" <%= !sort || sort === 'default' ? 'selected' : '' %>>Featured</option>
+                <optgroup label="Sort">
+                    <option value="sort:priceLow"  <%= sort === 'priceLow'  ? 'selected' : '' %>>Price: Low to High</option>
+                    <option value="sort:priceHigh" <%= sort === 'priceHigh' ? 'selected' : '' %>>Price: High to Low</option>
+                    <option value="sort:nameAZ"    <%= sort === 'nameAZ'    ? 'selected' : '' %>>Name: A - Z</option>
+                    <option value="sort:nameZA"    <%= sort === 'nameZA'    ? 'selected' : '' %>>Name: Z - A</option>
+                </optgroup>
+                <optgroup label="Categories">
+                    <option value="cat:" <%= !category ? 'selected' : '' %>>All Categories</option>
+                    <option value="cat:New In" <%= category === 'New In' ? 'selected' : '' %>>New In</option>
+                    <option value="cat:Festive" <%= category === 'Festive' ? 'selected' : '' %>>Festive</option>
+                    <option value="cat:Lawn" <%= category === 'Lawn' ? 'selected' : '' %>>Lawn</option>
+                    <option value="cat:Luxe Pret" <%= category === 'Luxe Pret' ? 'selected' : '' %>>Luxe Pret</option>
+                    <option value="cat:BATIKstudio" <%= category === 'BATIKstudio' ? 'selected' : '' %>>BATIKstudio</option>
+                </optgroup>
+            </select>
+        </div>
+    </div>
+</div>
+
+<script>
+    function handleCombinedChange(val) {
+        if (!val) return;
+        var params = new URLSearchParams(window.location.search);
+        var parts = val.split(':');
+        var type = parts[0];
+        var value = parts.slice(1).join(':');
+
+        if (type === 'sort') {
+            if (value === 'default') params.delete('sort'); else params.set('sort', value);
+        } else if (type === 'cat') {
+            if (!value) params.delete('category'); else params.set('category', value);
+        }
+
+        // preserve search/min/max already present or from hidden inputs
+        var searchVal = document.getElementById('currentSearch').value;
+        var minVal = document.getElementById('currentMinPrice').value;
+        var maxVal = document.getElementById('currentMaxPrice').value;
+        if (searchVal) params.set('search', searchVal); else params.delete('search');
+        if (minVal) params.set('minPrice', minVal); else params.delete('minPrice');
+        if (maxVal) params.set('maxPrice', maxVal); else params.delete('maxPrice');
+
+        params.delete('page');
+        window.location = '/products?' + params.toString();
+    }
+</script>
+
+<!-- Products Grid -->
+<% if (products.length === 0) { %>
+    <div class="emptyState">
+        No products found. <a href="/products">View all products</a>
+    </div>
+<% } else { %>
+    <div class="products">
+        <% products.forEach(product => { %>
+        <div class="card">
+            <img src="/<%= product.image %>" alt="<%= product.name %>">
+            <div class="productInfo">
+                <h3 class="productTitle"><%= product.name %></h3>
+                <p class="productPrice">PKR <%= product.price.toLocaleString() %></p>
+                <button class="addToCartBtn">Add to cart</button>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+<% } %>
+
+<!-- Pagination -->
+<div class="pagination">
+    <% if (currentPage > 1) { %>
+        <a href="/products?page=<%= currentPage-1 %>&search=<%= search %>&category=<%= category %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>&sort=<%= sort %>">← Prev</a>
+    <% } %>
+
+    <% for (let i = 1; i <= totalPages; i++) { %>
+        <a href="/products?page=<%= i %>&search=<%= search %>&category=<%= category %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>&sort=<%= sort %>"
+           class="<%= i === currentPage ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+
+    <% if (currentPage < totalPages) { %>
+        <a href="/products?page=<%= currentPage+1 %>&search=<%= search %>&category=<%= category %>&minPrice=<%= minPrice %>&maxPrice=<%= maxPrice %>&sort=<%= sort %>">Next →</a>
+    <% } %>
+</div>
+
+<!-- Footer -->
+<hr class="footerLine">
+<footer class="footer">
+    <div class="footerContainer">
+        <div class="footerCol">
+            <ul>
+                <li>About us</li>
+                <li>Store Locator</li>
+                <li>FAQs</li>
+                <li>Contact us</li>
+            </ul>
+        </div>
+        <div class="footerCol">
+            <ul>
+                <li>Shipping, Payments & Delivery</li>
+                <li>Exchange & Return Policy</li>
+                <li>Privacy Policy</li>
+                <li>Your Security Is Our Priority</li>
+            </ul>
+        </div>
+        <div class="footerCol subscribeCol">
+            <h4>SUBSCRIBE</h4>
+            <div class="subscribeInput">
+                <input type="email" placeholder="Enter your email">
+                <i class="fa-regular fa-envelope"></i>
+            </div>
+            <div class="footerSocials">
+                <i class="fab fa-instagram"></i>
+                <i class="fab fa-facebook"></i>
+                <i class="fab fa-x-twitter"></i>
+                <i class="fab fa-snapchat"></i>
+            </div>
+        </div>
+    </div>
+    <p class="copyright">© 2026 BATIK</p>
+</footer>
+
+<!-- Cart modal (same behavior as index page) -->
+<div id="cartModal" aria-hidden="true">
+    <div class="cart-header">Cart <button id="cartCloseBtn" type="button">x</button></div>
+    <div class="cart-items" id="cartItems"></div>
+    <div class="cart-footer">
+        <div style="margin-bottom:8px">Total: <span id="cartTotal">PKR 0</span></div>
+        <button id="checkoutBtn" class="checkoutBtn">Checkout</button>
+    </div>
+</div>
+
+<style>
+    .addToCartBtn { display:inline-block; padding:8px 12px; margin-top:8px; background:transparent; color:#000; border:1px solid #000; cursor:pointer; font-size:14px; }
+    .cartToggle { position:relative; display:inline-block; }
+    .cart-badge { background:#000; color:#fff; border:none; border-radius:50%; width:14px; height:14px; padding:0; font-size:10px; line-height:14px; position:absolute; top:-4px; right:-10px; display:none; text-align:center; box-sizing:border-box; box-shadow:0 1px 2px rgba(0,0,0,0.12); }
+    #cartModal { position:fixed; right:20px; top:60px; width:360px; max-height:70vh; background:#fff; border:1px solid #ddd; box-shadow:0 6px 24px rgba(0,0,0,0.1); display:none; overflow:auto; z-index:9999; }
+    #cartModal .cart-header { padding:12px; border-bottom:1px solid #eee; font-weight:600; display:flex; justify-content:space-between; align-items:center; }
+    #cartCloseBtn { border:1px solid #ccc; background:#fff; cursor:pointer; width:28px; height:28px; line-height:24px; }
+    #cartModal .cart-items { padding:12px }
+    #cartModal .cart-item { display:flex; gap:8px; align-items:center; margin-bottom:10px }
+    #cartModal .cart-item img { width:54px; height:54px; object-fit:cover; border:1px solid #eee }
+    #cartModal .qty-controls { display:flex; gap:6px; align-items:center }
+    #cartModal .qty-controls button { width:28px; height:28px; border:1px solid #ccc; background:#fff; cursor:pointer }
+    #cartModal .cart-footer { padding:12px; border-top:1px solid #eee }
+    #cartModal .checkoutBtn { display:block; width:100%; padding:10px; background:#000; color:#fff; border:none; cursor:pointer }
+</style>
+
+<script>
+    (function(){
+        const cartKey = 'lab_cart_v1';
+        const IS_LOGGED_IN = <%= currentUser ? 'true' : 'false' %>;
+        const cartCloseBtn = document.getElementById('cartCloseBtn');
+        const cartCountEls = document.querySelectorAll('.cart-badge');
+        const cartModal = document.getElementById('cartModal');
+        const cartItemsEl = document.getElementById('cartItems');
+        const cartTotalEl = document.getElementById('cartTotal');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+
+        function loadCart(){ try{ return JSON.parse(localStorage.getItem(cartKey)) || {}; }catch(e){return {}} }
+        function saveCart(cart){
+            localStorage.setItem(cartKey, JSON.stringify(cart));
+            updateBadge();
+            if (IS_LOGGED_IN) {
+                try {
+                    fetch('/api/cart', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cart }) }).catch(()=>{});
+                } catch(e){}
+            }
+        }
+        function updateBadge(){ if(!cartCountEls) return; const cart = loadCart(); let qty=0; Object.values(cart).forEach(i=>qty+=i.qty||0); cartCountEls.forEach(el=>{ if(qty>0){ el.style.display='inline-block'; el.textContent = qty } else { el.style.display='none' } }); }
+        function formatPrice(text){ const num = parseFloat((text||'').replace(/[^0-9\.]/g,''))||0; return num; }
+        function renderCart(){ const cart = loadCart(); if(!cartItemsEl) return; cartItemsEl.innerHTML=''; let total=0; Object.keys(cart).forEach(key=>{ const item=cart[key]; const div=document.createElement('div'); div.className='cart-item'; div.innerHTML = `<img src="${item.img}" alt=""><div style="flex:1"><div style="font-size:13px">${item.title}</div><div style="font-size:13px;color:#666">PKR ${item.price.toLocaleString()}</div></div><div class="qty-controls"><button data-action="decr" data-id="${key}">-</button><div style="min-width:24px;text-align:center">${item.qty}</div><button data-action="incr" data-id="${key}">+</button></div>`; cartItemsEl.appendChild(div); total += item.price * item.qty; }); if(cartTotalEl) cartTotalEl.textContent = 'PKR ' + total.toLocaleString(); }
+
+        function closeCart(){ if(cartModal) cartModal.style.display = 'none'; }
+
+        document.addEventListener('click', function(e){
+            if(e.target.matches('.addToCartBtn')){
+                const card = e.target.closest('.card');
+                const title = card.querySelector('.productTitle').textContent.trim();
+                const priceText = card.querySelector('.productPrice').textContent.trim();
+                const img = card.querySelector('img') ? card.querySelector('img').src : '';
+                const price = formatPrice(priceText);
+                const key = title.replace(/\s+/g,'_').toLowerCase();
+                const cart = loadCart();
+                if(!cart[key]) cart[key] = { title, price, img, qty:0 };
+                cart[key].qty += 1;
+                saveCart(cart);
+                renderCart();
+            }
+            if(e.target.closest && e.target.closest('.cartToggle')){
+                if(cartModal) cartModal.style.display = cartModal.style.display === 'block' ? 'none' : 'block';
+                renderCart();
+            }
+            if(cartModal && cartModal.style.display === 'block' && !e.target.closest('#cartModal') && !e.target.closest('.cartToggle')){
+                closeCart();
+            }
+            if(e.target.dataset && (e.target.dataset.action === 'incr' || e.target.dataset.action === 'decr')){
+                const id = e.target.dataset.id; const action = e.target.dataset.action; const cart = loadCart(); if(cart[id]){ if(action==='incr') cart[id].qty +=1; else cart[id].qty = Math.max(0, cart[id].qty-1); if(cart[id].qty===0) delete cart[id]; saveCart(cart); renderCart(); }
+            }
+        });
+
+        if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
+        document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeCart(); });
+        if (checkoutBtn) checkoutBtn.addEventListener('click', function(){ window.location.href = '/checkout'; });
+        // initial: if logged in, load server cart (server authoritative). For anonymous users keep local cart.
+        if (IS_LOGGED_IN) {
+            fetch('/api/cart').then(r=>r.json()).then(data=>{
+                const serverCart = data && data.cart ? data.cart : {};
+                try { localStorage.setItem(cartKey, JSON.stringify(serverCart)); }catch(e){}
+                updateBadge(); renderCart();
+            }).catch(()=>{ updateBadge(); renderCart(); });
+        } else {
+            updateBadge(); renderCart();
+        }
+    })();
+</script>
+
+<script>
+    function toggleMenu() {
+        const nav = document.getElementById('mobileNav');
+        nav.classList.toggle('open');
+    }
+
+    function toggleSearchBar() {
+        const searchContainer = document.getElementById('searchBarContainer');
+        searchContainer.classList.toggle('active');
+        if (searchContainer.classList.contains('active')) {
+            const input = document.querySelector('.searchBarInput');
+            if (input) input.focus();
+        }
+    }
+
+    function toggleFilterPopup() {
+        const filterPopup = document.getElementById('filterPopup');
+        if (filterPopup.style.display === 'none') {
+            filterPopup.style.display = 'block';
+        } else {
+            filterPopup.style.display = 'none';
+        }
+    }
+
+    function filterByCategory(category) {
+        const currentUrl = new URL(window.location);
+        if (category === '') {
+            currentUrl.searchParams.delete('category');
+        } else {
+            currentUrl.searchParams.set('category', category);
+        }
+        window.location.href = currentUrl.toString();
+    }
+
+    // Close search bar when clicking outside
+    document.addEventListener('click', function(event) {
+        const searchContainer = document.getElementById('searchBarContainer');
+        const searchIcon = document.querySelector('.headerIcons a');
+        if (searchContainer && searchIcon && !searchContainer.contains(event.target) && !searchIcon.contains(event.target)) {
+            searchContainer.classList.remove('active');
+        }
+    });
+
+    // Close filter popup when clicking outside
+    document.addEventListener('click', function(event) {
+        const filterPopup = document.getElementById('filterPopup');
+        const filterBtn = document.querySelector('.filterIconBtn');
+        if (filterPopup && filterBtn && !filterPopup.contains(event.target) && !filterBtn.contains(event.target)) {
+            filterPopup.style.display = 'none';
+        }
+    });
+
+    // Submit search on Enter
+    document.addEventListener('keypress', function(event) {
+        const searchInput = document.querySelector('.searchBarInput');
+        if (searchInput && event.key === 'Enter' && searchInput.value.trim()) {
+            searchInput.form.submit();
+        }
+    });
+
+    // Close search bar on Escape
+    document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') {
+            const searchContainer = document.getElementById('searchBarContainer');
+            if (searchContainer) searchContainer.classList.remove('active');
+            const filterPopup = document.getElementById('filterPopup');
+            if (filterPopup) filterPopup.style.display = 'none';
+        }
+    });
+
+    document.querySelectorAll('#mobileNav a').forEach(function(link) {
+        link.addEventListener('click', function() {
+            document.getElementById('mobileNav').classList.remove('open');
+        });
+    });
+</script>
+
+</body>
+</html>
