@@ -353,6 +353,17 @@
     background: white;
     cursor: pointer;
 }
+.filterButton i {
+    margin-right: 6px;
+    font-size: 14px;
+}
+
+.topBar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+}
 
 /* Products Grid */
 .products {
@@ -368,17 +379,6 @@
     object-fit: cover;
 }
 
-.topBar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-}
-
-.filterButton i {
-    margin-right: 6px;
-    font-size: 14px;
-}
 
 .card {
     display: flex;

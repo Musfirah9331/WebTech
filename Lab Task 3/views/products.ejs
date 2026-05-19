@@ -326,7 +326,6 @@ No online transfers required
 <script>
     (function(){
         const cartKey = 'lab_cart_v1';
-        const IS_LOGGED_IN = <%= currentUser ? 'true' : 'false' %>;
         const cartCloseBtn = document.getElementById('cartCloseBtn');
         const cartCountEls = document.querySelectorAll('.cart-badge');
         const cartModal = document.getElementById('cartModal');
@@ -335,15 +334,7 @@ No online transfers required
         const checkoutBtn = document.getElementById('checkoutBtn');
 
         function loadCart(){ try{ return JSON.parse(localStorage.getItem(cartKey)) || {}; }catch(e){return {}} }
-        function saveCart(cart){
-            localStorage.setItem(cartKey, JSON.stringify(cart));
-            updateBadge();
-            if (IS_LOGGED_IN) {
-                try {
-                    fetch('/api/cart', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ cart }) }).catch(()=>{});
-                } catch(e){}
-            }
-        }
+        function saveCart(cart){ localStorage.setItem(cartKey, JSON.stringify(cart)); updateBadge(); }
         function updateBadge(){ if(!cartCountEls) return; const cart = loadCart(); let qty=0; Object.values(cart).forEach(i=>qty+=i.qty||0); cartCountEls.forEach(el=>{ if(qty>0){ el.style.display='inline-block'; el.textContent = qty } else { el.style.display='none' } }); }
         function formatPrice(text){ const num = parseFloat((text||'').replace(/[^0-9\.]/g,''))||0; return num; }
         function renderCart(){ const cart = loadCart(); if(!cartItemsEl) return; cartItemsEl.innerHTML=''; let total=0; Object.keys(cart).forEach(key=>{ const item=cart[key]; const div=document.createElement('div'); div.className='cart-item'; div.innerHTML = `<img src="${item.img}" alt=""><div style="flex:1"><div style="font-size:13px">${item.title}</div><div style="font-size:13px;color:#666">PKR ${item.price.toLocaleString()}</div></div><div class="qty-controls"><button data-action="decr" data-id="${key}">-</button><div style="min-width:24px;text-align:center">${item.qty}</div><button data-action="incr" data-id="${key}">+</button></div>`; cartItemsEl.appendChild(div); total += item.price * item.qty; }); if(cartTotalEl) cartTotalEl.textContent = 'PKR ' + total.toLocaleString(); }
@@ -379,16 +370,7 @@ No online transfers required
         if (cartCloseBtn) cartCloseBtn.addEventListener('click', closeCart);
         document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeCart(); });
         if (checkoutBtn) checkoutBtn.addEventListener('click', function(){ window.location.href = '/checkout'; });
-        // initial: if logged in, load server cart (server authoritative). For anonymous users keep local cart.
-        if (IS_LOGGED_IN) {
-            fetch('/api/cart').then(r=>r.json()).then(data=>{
-                const serverCart = data && data.cart ? data.cart : {};
-                try { localStorage.setItem(cartKey, JSON.stringify(serverCart)); }catch(e){}
-                updateBadge(); renderCart();
-            }).catch(()=>{ updateBadge(); renderCart(); });
-        } else {
-            updateBadge(); renderCart();
-        }
+        updateBadge(); renderCart();
     })();
 </script>
 

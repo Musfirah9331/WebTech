@@ -144,5 +144,3 @@ router.post('/orders', verifyToken, async (req, res) => {
         res.status(500).json({ error: 'Server error' });
     }
 });
-
-module.exports = router;
