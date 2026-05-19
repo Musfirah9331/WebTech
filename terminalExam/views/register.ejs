@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register - BATIK</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body class="authBody">
+
+<div class="authPageWrap">
+<div class="authCard">
+
+    <div class="authLogo">
+        <img src="/img/img0.png" alt="BATIK Logo">
+    </div>
+
+    <h2>CREATE ACCOUNT</h2>
+
+    <% if (error && error.length > 0) { %>
+        <div class="flashMsg error"><%= error %></div>
+    <% } %>
+
+    <form action="/register" method="POST">
+        <div class="formGroup">
+            <label>Full Name</label>
+            <input type="text" name="name" required placeholder="Your Name">
+        </div>
+        <div class="formGroup">
+            <label>Email Address</label>
+            <input type="email" name="email" required placeholder="you@example.com">
+        </div>
+        <div class="formGroup">
+            <label>Password (min 6 characters)</label>
+            <input type="password" name="password" required placeholder="••••••••" minlength="6">
+        </div>
+        <button type="submit" class="authBtn">CREATE ACCOUNT</button>
+    </form>
+
+    <p class="authLink">Already have an account? <a href="/login">Login here</a></p>
+    <p class="authLink"><a href="/">← Back to Store</a></p>
+
+</div>
+</div>
+
+</body>
+</html>
